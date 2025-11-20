@@ -1,0 +1,7 @@
+langchain==0.3.14
+langchain_core==0.3.29
+langchain-openai>=0.2.0
+python-dotenv
+pydantic
+requests
+openapi-spec-validator>=0.7.1
