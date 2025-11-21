@@ -1,9 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-from langchain_core.prompts import ChatPromptTemplate
-
-from langchain_core.prompts import ChatPromptTemplate
-
 AGENT_PROMPT = ChatPromptTemplate.from_messages(
     [
         (
