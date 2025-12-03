@@ -26,15 +26,17 @@ def generate_artifacts(spec_json: str, modes: dict | None = None) -> str:
     if not (modes.get("automation") or modes.get("test_case")):
         return json.dumps({"error": "No modes selected."})
 
-    LLM.with_structured_output(Artifacts, method="function_calling")
-    out: Artifacts = (GENERATE_ARTIFACTS_TOOL_PROMPT | LLM).invoke(
+    llm_structured = LLM.with_structured_output(Artifacts, method="function_calling")
+    out: Artifacts = (GENERATE_ARTIFACTS_TOOL_PROMPT | llm_structured).invoke(
         {"json": spec_json, "modes": modes}
     )
 
-    result = {}
-    if modes.get("automation"):
+    result: dict[str, str] = {}
+
+    if modes.get("automation") and out.tests_spec_js:
         result["tests_spec_js"] = out.tests_spec_js.strip()
-    if modes.get("test_case"):
+
+    if modes.get("test_case") and out.test_cases_txt:
         result["test_cases_txt"] = out.test_cases_txt.strip()
 
     return json.dumps(result)
