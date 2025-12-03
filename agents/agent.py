@@ -1,5 +1,4 @@
 import json
-from dotenv import load_dotenv
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from utils.utils import parse_args
 from core.model import LLM
@@ -10,8 +9,6 @@ from core.tools import (
     save_automation_artifact,
     save_test_case_artifact,
 )
-
-load_dotenv()
 
 
 def run_agent(url: str, want_automation: bool, want_test_case: bool):
