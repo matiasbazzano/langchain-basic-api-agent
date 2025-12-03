@@ -27,7 +27,7 @@ def generate_artifacts(spec_json: str, modes: dict | None = None) -> str:
     if not (modes.get("automation") or modes.get("test_case")):
         return json.dumps({"error": "No modes selected."})
 
-    llm = ChatOpenAI(model=DEFAULT_MODEL, temperature=0).with_structured_output(
+    llm = ChatOpenAI(model=DEFAULT_MODEL).with_structured_output(
         Artifacts, method="function_calling"
     )
     out: Artifacts = (GENERATE_ARTIFACTS_TOOL_PROMPT | llm).invoke(

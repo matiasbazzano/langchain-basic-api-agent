@@ -23,7 +23,7 @@ def run_agent(url: str, want_automation: bool, want_test_case: bool):
         save_test_case_artifact,
     ]
 
-    llm = ChatOpenAI(model=DEFAULT_MODEL, temperature=0)
+    llm = ChatOpenAI(model=DEFAULT_MODEL)
     agent = create_tool_calling_agent(llm=llm, tools=tools, prompt=AGENT_PROMPT)
     executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
     modes = {"automation": want_automation, "test_case": want_test_case}
