@@ -1,9 +1,8 @@
 import json
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from utils.utils import parse_args
-from core.models import DEFAULT_MODEL
+from core.model import LLM
 from core.prompts import AGENT_PROMPT
 from core.tools import (
     fetch_openapi_spec,
@@ -23,8 +22,7 @@ def run_agent(url: str, want_automation: bool, want_test_case: bool):
         save_test_case_artifact,
     ]
 
-    llm = ChatOpenAI(model=DEFAULT_MODEL)
-    agent = create_tool_calling_agent(llm=llm, tools=tools, prompt=AGENT_PROMPT)
+    agent = create_tool_calling_agent(llm=LLM, tools=tools, prompt=AGENT_PROMPT)
     executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
     modes = {"automation": want_automation, "test_case": want_test_case}
     result = executor.invoke({"input": json.dumps({"url": url, "modes": modes})})

@@ -1,9 +1,8 @@
 import json, requests, yaml, os
 from openapi_spec_validator import validate_spec
-from langchain_openai import ChatOpenAI
 from langchain.tools import tool
 from core.schemas import Artifacts
-from core.models import DEFAULT_MODEL
+from core.model import LLM
 from core.prompts import GENERATE_ARTIFACTS_TOOL_PROMPT
 
 
@@ -27,10 +26,8 @@ def generate_artifacts(spec_json: str, modes: dict | None = None) -> str:
     if not (modes.get("automation") or modes.get("test_case")):
         return json.dumps({"error": "No modes selected."})
 
-    llm = ChatOpenAI(model=DEFAULT_MODEL).with_structured_output(
-        Artifacts, method="function_calling"
-    )
-    out: Artifacts = (GENERATE_ARTIFACTS_TOOL_PROMPT | llm).invoke(
+    LLM.with_structured_output(Artifacts, method="function_calling")
+    out: Artifacts = (GENERATE_ARTIFACTS_TOOL_PROMPT | LLM).invoke(
         {"json": spec_json, "modes": modes}
     )
 
