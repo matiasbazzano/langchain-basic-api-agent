@@ -46,7 +46,7 @@ tests_spec_js requirements:
 - Do not include placeholder comments or TODO notes; keep the file strictly code-only.
 - Single describe() with one it() per test case.
 - Apply Clean Code and DRY; create small helpers for requests and payloads.
-- Apply correct formatting, indentation, and spacing.
+- IMPORTANT: Apply correct formatting, indentation, and spacing.
 - Cover each operation: happy path, invalid/missing fields, unauthorized (if security applies).
 - Derive payloads/params from the spec (examples, required, enums, formats).
 - Base URL from servers[0] or "http://localhost:3000".
